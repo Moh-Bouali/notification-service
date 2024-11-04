@@ -34,7 +34,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue friendRequestQueue() {
-        return new Queue(FRIEND_REQUEST_QUEUE);
+        return QueueBuilder.durable(FRIEND_REQUEST_QUEUE).build();
     }
 
     @Bean
@@ -44,7 +44,7 @@ public class RabbitMQConfig {
 
     // Friendship Event Configuration
     public static final String FRIENDSHIP_RESPONSE_EXCHANGE = "friendshipResponseExchange";
-    public static final String FRIENDSHIP_RESPONSE_QUEUE = "friendshipResponseQueue";
+    public static final String NOTIFICATION_FRIENDSHIP_RESPONSE_QUEUE = "notificationFriendshipResponseQueue";
     public static final String FRIENDSHIP_RESPONSE_ROUTING_KEY = "friendshipResponseKey";
 
     @Bean
@@ -53,12 +53,12 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue friendshipEventQueue() {
-        return new Queue(FRIENDSHIP_RESPONSE_QUEUE);
+    public Queue notificationFriendshipEventQueue() {
+        return QueueBuilder.durable(NOTIFICATION_FRIENDSHIP_RESPONSE_QUEUE).build();
     }
 
     @Bean
-    public Binding bindingEvent(Queue friendshipEventQueue, DirectExchange friendshipEventExchange) {
-        return BindingBuilder.bind(friendshipEventQueue).to(friendshipEventExchange).with(FRIENDSHIP_RESPONSE_ROUTING_KEY);
+    public Binding bindingEvent(Queue notificationFriendshipEventQueue, DirectExchange friendshipEventExchange) {
+        return BindingBuilder.bind(notificationFriendshipEventQueue).to(friendshipEventExchange).with(FRIENDSHIP_RESPONSE_ROUTING_KEY);
     }
 }
