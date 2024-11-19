@@ -25,7 +25,6 @@ public class NotificationService {
         try {
             String requestJson = objectMapper.writeValueAsString(request);
             messagingTemplate.convertAndSend(destination, requestJson);
-            System.out.println(request);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
